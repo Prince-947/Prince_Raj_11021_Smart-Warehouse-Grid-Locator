@@ -1,83 +1,47 @@
-import java.util.Scanner;
+import java.util.*;
 
 class GridItem {
-    private String itemId;
-    private String itemName;
-    private int quantity;
+    String id, name;
+    int quantity;
 
-    public GridItem(String itemId, String itemName, int quantity) {
-        this.itemId = itemId;
-        this.itemName = itemName;
+    GridItem(String id, String name, int quantity) {
+        this.id = id;
+        this.name = name;
         this.quantity = quantity;
     }
 
-    public String getItemId() {
-        return itemId;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void display() {
-        System.out.println(itemId + " - " + itemName + " (Qty: " + quantity + ")");
+    void display() {
+        System.out.println(id + " - " + name + " (Qty: " + quantity + ")");
     }
 }
 
 class Warehouse {
-    private GridItem[][] grid;
+    GridItem[][] grid;
 
-    public Warehouse(int rows, int columns) {
-        grid = new GridItem[rows][columns];
+    Warehouse(int rows, int cols) {
+        grid = new GridItem[rows][cols];
     }
 
-    public void addItem(int row, int col, GridItem item) {
+    void addItem(int row, int col, GridItem item) {
         grid[row][col] = item;
     }
 
-    public void searchItem(String id) {
-        System.out.println("\nSearching for item ID: " + id);
-
+    void searchItem(String id) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-
-                if (grid[i][j] != null &&
-                    grid[i][j].getItemId().equals(id)) {
-
-                    System.out.println("Item found at Row: " + i +
-                                       ", Column: " + j);
-
+                if (grid[i][j] != null && grid[i][j].id.equals(id)) {
+                    System.out.println("Item found at Row: " + i + ", Column: " + j);
                     System.out.print("Item Details: ");
                     grid[i][j].display();
                     return;
                 }
             }
         }
-
         System.out.println("Item not found in warehouse");
     }
-
-    public void displayGrid() {
-        System.out.println("Warehouse Layout:");
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-
-                if (grid[i][j] != null) {
-                    System.out.print(grid[i][j].getItemId() + "\t");
-                } else {
-                    System.out.print("Empty\t");
-                }
-            }
-            System.out.println();
-        }
-    }
 }
-public class Project {
+
+public class project {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -94,7 +58,6 @@ public class Project {
 
         for (int i = 0; i < n; i++) {
             System.out.println("\nEnter details for item " + (i + 1));
-
             System.out.print("Item ID: ");
             String id = sc.next();
 
@@ -102,7 +65,7 @@ public class Project {
             String name = sc.next();
 
             System.out.print("Quantity: ");
-            int quantity = sc.nextInt();
+            int qty = sc.nextInt();
 
             System.out.print("Row position: ");
             int row = sc.nextInt();
@@ -110,12 +73,12 @@ public class Project {
             System.out.print("Column position: ");
             int col = sc.nextInt();
 
-            warehouse.addItem(row, col, new GridItem(id, name, quantity));
+            warehouse.addItem(row, col, new GridItem(id, name, qty));
         }
-        warehouse.displayGrid();
 
-        System.out.print("\nEnter item ID to search: ");
+        System.out.print("Enter item ID to search: ");
         String searchId = sc.next();
+
         warehouse.searchItem(searchId);
     }
 }
